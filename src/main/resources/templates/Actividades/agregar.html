@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <title>Registrar Actividades</title>
+	    <link rel="icon" th:href="@{/img/icon.png}" type="image/x-icon">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" th:href="@{/css/new.css}">
+		<script th:src="@{/javascript/preview.js}"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+	</head>
+	<body>
+		<div class="navbar">
+			<div th:if="${session.UserLog != null}">
+				<div class="imag-logo">
+					<a th:href="@{/usuario/}"><img th:src="@{/img/logo.png}"></a>
+				</div>
+			</div>
+			<div th:if="${session.AdminLog != null}">
+				<div class="imag-logo">
+					<a th:href="@{/admin/}"><img th:src="@{/img/logo.png}"></a>
+				</div>
+			</div>
+			<div th:if="${session.UserLog == null && session.AdminLog == null}">
+				<div class="imag-logo">
+					<a th:href="@{/}"><img th:src="@{/img/logo.png}"></a>
+				</div>
+			</div>
+			<div class="navbar-center">
+				<div class="search-bar">
+					<form th:action="@{/search}" method="get">
+						<input type="text" name="query" placeholder="Buscar destinos, hoteles o restaurantes..." required>
+						<button type="submit" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); border: none; background: none; cursor: pointer;">
+							<i class="fas fa-search" style="font-size: 18px; color: #00bfff;"></i>
+						</button>
+					</form>
+				</div>
+			</div>
+			<div class="navbar-buttons">
+	            <a th:href='@{/destinos}' class="navbar-buttons">Destinos</a>
+			</div>
+			<div th:if="${session.AdminLog != null}">
+	            <div class="dropdown">
+					<button class="dropdown-toggle navbar-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa-solid fa-gear"></i>
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" th:href="@{/admin/destino}"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i> Gestionar Destinos</a>
+						<a class="dropdown-item" th:href="@{/admin/hoteles}"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i> Gestionar Hoteles</a>
+						<a class="dropdown-item" th:href="@{/admin/restaurantes}"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i> Gestionar Restaurantes</a>
+						<a class="dropdown-item" th:href="@{/admin/nuevasActividades}"><i class="fa-solid fa-plus" style="margin-right: 7px;"></i> Añadir Actividades</a>
+						<a class="dropdown-item" th:href="@{/admin/listaUsuarios}"><i class="fa-solid fa-address-book" style="margin-right: 5px;"></i> Info Usuarios</a>
+						<a class="dropdown-item" th:href="@{/admin/listaAdministradores}"><i class="fa-solid fa-address-book" style="margin-right: 5px;"></i> Info Admin</a>
+					</div>
+				</div>
+			</div>
+			<div class="navbar-buttons">
+	            <div th:if="${session.UserLog != null || session.AdminLog != null}">
+					<button class="navbar-button" type="button" th:onclick="|window.location.href='@{/logout}'|">
+	        			<strong><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</strong>
+	    			</button>
+	            </div>
+	            <div th:if="${session.UserLog == null && session.AdminLog == null}">
+					<a th:href='@{/login}' class="navbar-button">Iniciar Sesión</a>
+	            </div>
+	        </div>
+		</div>
+		<div class="main-container">
+			<div class="container">
+				<div class="form-container">
+					<h1><i class="fas fa-clipboard-list"></i> Agregar Nueva Actividad</h1>
+					<form th:action="@{/actividades/agregar}" th:object="${actividad}" method="post" enctype="multipart/form-data">
+						<input type="hidden" th:field="*{id}">
+						<div class="form-group">
+							<label for="nombre"><i class="fas fa-clipboard-list" style="margin-right: 5px;"></i> Nombre de la Actividad:</label>
+							<input type="text" id="nombre" name="nombre" th:field="*{nombre}" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label for="descripcion"><i class="fas fa-align-left" style="margin-right: 5px;"></i> Descripción:</label>
+							<textarea id="descripcion" name="descripcion" th:field="*{descripcion}" class="form-control" required></textarea>
+						</div>
+						<div class="form-row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="destino"><i class="fas fa-map-signs" style="margin-right: 5px;"></i> Destino:</label>
+									<select id="destino" th:field="*{destino}" class="form-control" required>
+										<option th:each="destino : ${destinos}" th:value="${destino.id}" th:text="${destino.nombre}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="ubicacion"><i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i> Ubicación:</label>
+									<input type="text" id="ubicacion" name="ubicacion" th:field="*{ubicacion}" class="form-control">
+								</div>
+							</div>
+						</div><div class="form-group">
+							<label for="imagenes"><i class="fas fa-images" style="margin-right: 5px;"></i> Imágenes:</label>
+							<div class="custom-file">
+								<input type="file" id="imagenes" name="imagenes" th:field="*{imagenes}" accept="image/*" class="custom-file-input" style="cursor: pointer;" multiple required onchange="updateFileList()">
+								<label class="custom-file-label" for="imagenes">Elegir archivos</label>
+							</div>
+							<ul id="fileList" class="list-group mt-2"></ul>
+						</div>
+						<div th:if="${error}" class="error-message">
+							<p th:text="${error}"></p>
+						</div>
+						<div class="btn-save">
+							<button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Agregar Actividad</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

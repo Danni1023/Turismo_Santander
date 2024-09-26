@@ -1,0 +1,129 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('../img/picacho.png') no-repeat center center fixed; 
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar {
+    width: 100%;
+    background-color: #f0f8ff;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.imag-logo img {
+    width: 150px; /* Ajusta el tamaño del logo */
+    height: auto;
+}
+
+.navbar-button {
+    background-color: #00bfff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 50px;
+}
+
+.navbar-button:hover {
+    background-color: #0099cc;
+}
+
+.form-container {
+    margin: auto;
+    width: 390px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-top: 200px;
+}
+
+.form-container h2 {
+    margin-top: 20px;
+	margin-bottom: 40px;
+    color: #00bfff;
+}
+
+.form-container label {
+    display: block;
+    text-align: justify;
+    margin: 10px 8px 5px;
+    font-weight: bold;
+}
+
+.form-container input[type="text"],
+.form-container input[type="password"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.input-field-container {
+	position: relative;
+}
+
+.input-field-container .icon {
+	position: absolute;
+	right: 30px;
+	top: 38%;
+	transform: translateY(-50%);
+	cursor: pointer;
+}
+
+.form-container input[type="submit"] {
+    background-color: #00bfff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-container input[type="submit"]:hover {
+    background-color: #0099cc;
+}
+
+.form-container button {
+    background-color: #00bfff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-container button:hover {
+    background-color: #0099cc;
+}
+
+a {
+	text-decoration: none;
+	cursor: pointer;
+	color: rgb(0, 0, 255);
+}
+
+.error-message p {
+	color: red;
+	text-align: center;
+	font-weight: bold;
+}

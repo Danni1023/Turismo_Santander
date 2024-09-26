@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Restaurantes</title>
+		<link rel="icon" th:href="@{/img/icon.png}" type="image/x-icon">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<link rel="stylesheet" th:href="@{/css/destinos.css}">
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="navbar">
+			<div th:if="${session.UserLog != null}">
+				<div class="imag-logo">
+					<a th:href="@{/usuario/}"><img th:src="@{/img/logo.png}"></a>
+				</div>
+			</div>
+			<div th:if="${session.AdminLog != null}">
+				<div class="imag-logo">
+					<a th:href="@{/admin/}"><img th:src="@{/img/logo.png}"></a>
+				</div>
+			</div>
+			<div th:if="${session.UserLog == null && session.AdminLog == null}">
+				<div class="imag-logo">
+					<a th:href="@{/}"><img th:src="@{/img/logo.png}"></a>
+				</div>
+			</div>
+			<div class="navbar-center">
+				<div class="search-bar">
+					<form th:action="@{/search}" method="get">
+						<input type="text" name="query" placeholder="Buscar destinos, hoteles o restaurantes..." required>
+						<button type="submit" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); border: none; background: none; cursor: pointer;">
+							<i class="fas fa-search" style="font-size: 18px; color: #00bfff;"></i>
+						</button>
+					</form>
+				</div>
+			</div>
+			<div class="navbar-buttons">
+	            <a th:href='@{/destinos}' class="navbar-buttons">Destinos</a>
+			</div>
+			<div th:if="${session.AdminLog != null}">
+	            <div class="dropdown">
+					<button class="dropdown-toggle navbar-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa-solid fa-gear"></i>
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" th:href="@{/admin/destino}"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i> Gestionar Destinos</a>
+						<a class="dropdown-item" th:href="@{/admin/hoteles}"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i> Gestionar Hoteles</a>
+						<a class="dropdown-item" th:href="@{/admin/restaurantes}"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i> Gestionar Restaurantes</a>
+						<a class="dropdown-item" th:href="@{/admin/nuevasActividades}"><i class="fa-solid fa-plus" style="margin-right: 7px;"></i> Añadir Actividades</a>
+						<a class="dropdown-item" th:href="@{/admin/listaUsuarios}"><i class="fa-solid fa-address-book" style="margin-right: 5px;"></i> Info Usuarios</a>
+						<a class="dropdown-item" th:href="@{/admin/listaAdministradores}"><i class="fa-solid fa-address-book" style="margin-right: 5px;"></i> Info Admin</a>
+					</div>
+				</div>
+			</div>
+			<div class="navbar-buttons">
+	            <div th:if="${session.UserLog != null || session.AdminLog != null}">
+					<button class="navbar-button" type="button" th:onclick="|window.location.href='@{/logout}'|">
+	        			<strong><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</strong>
+	    			</button>
+	            </div>
+	            <div th:if="${session.UserLog == null && session.AdminLog == null}">
+					<a th:href='@{/login}' class="navbar-button">Iniciar Sesión</a>
+	            </div>
+	        </div>
+		</div>
+		<div class="content">
+			<h2><strong>Nuestros Restaurantes</strong></h2>
+			<div class="row">
+				<div th:each="restaurante : ${restaurantes}" class="col-md-4 mb-4">
+					<div class="card">
+						<img th:if="${restaurante.imagenBase64 != null && !restaurante.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${restaurante.imagenBase64[0]}"  class="card-img-top" alt="Imagen del Hotel">
+						<div class="card-body">
+							<h5 th:text="${restaurante.nombre}" class="card-title"></h5>
+							<p th:text="${restaurante.miniDescripcion}" class="card-text"></p>
+							<p th:text="${restaurante.direccion}" class="card-text"></p>
+							<a th:href="@{/restaurantes/detalles/{id}(id=${restaurante.id})}" class="btn btn-primary">Ver más</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" th:onclick="|window.location.href='@{/admin/nuevoRestaurante}'|" class="btn btn-new">
+				Nuevo Restaurante
+			</button>
+		</div>
+		<footer class="bg-dark text-light py-4 mt-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<div style="margin-left: 30px;">
+							<h5>Guía Del Viajero</h5>
+							<p>Explora los mejores destinos, hoteles y restaurantes en Santander. Vive una experiencia única conectando con la naturaleza, 
+								la cultura y diversas actividades.</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div style="margin-left: 120px;">
+							<h5>Contacto</h5>
+							<p><i class="fas fa-map-marker-alt"></i> Santander, Colombia</p>
+							<p><i class="fas fa-envelope"></i> dmicheldiaz@uts.edu.co</p>
+						</div>
+					</div>
+				</div>
+				<hr class="bg-light">
+				<div class="text-center">
+					<p class="mb-0">&copy; 2024 Guía Del Viajero. Danna Diaz.</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
