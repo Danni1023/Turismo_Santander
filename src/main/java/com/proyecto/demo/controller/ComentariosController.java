@@ -38,6 +38,7 @@ public class ComentariosController {
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 	
+	//Método para agregar comentarios en un destino
 	@PostMapping("/agregar")
 	public String agregar(@ModelAttribute("comentarios") Comentarios comentarios, @RequestParam("destinoId") String destinoId, HttpServletRequest request) {
 		
@@ -65,6 +66,7 @@ public class ComentariosController {
         return "redirect:/destino/" + destinoId;
 	}
 
+	//Método para agregar comentarios en un hotel
 	@PostMapping("/hotel")
 	public String hotel(@ModelAttribute("comentarios") Comentarios comentarios, @RequestParam("hotelId") String hotelId, HttpServletRequest request) {
 		
@@ -92,6 +94,7 @@ public class ComentariosController {
         return "redirect:/hoteles/detalles/" + hotelId;
 	}
 	
+	//Método para agregar comentarios al restaurante
 	@PostMapping("/restaurante")
 	public String restaurante(@ModelAttribute("comentarios") Comentarios comentarios, @RequestParam("restauranteId") String restauranteId, HttpServletRequest request) {
 		

@@ -31,6 +31,7 @@ public class UsuarioController {
 	@Autowired
 	private DestinoRepository destinoRepository;
 	
+	//Método para navegar a la pestaña del index del usuario
 	@GetMapping("/")
 	public String index(HttpServletRequest request, Model model) {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("UserLog");
@@ -61,6 +62,7 @@ public class UsuarioController {
 		return "Usuario/index";
 	}
 	
+	//Método para editar perfil del usuario
 	@GetMapping("/editarPerfil")
 	public String editarPerfil(HttpServletRequest request, Model model) {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("UserLog");

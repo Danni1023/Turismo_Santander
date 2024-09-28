@@ -40,6 +40,7 @@ public class HotelController {
 	@Autowired
 	private ComentariosRepository comentariosRepository;
 	
+	//Método para agregar hoteles
 	@PostMapping("/agregar")
 	public String registrarHotel(@ModelAttribute("hotel") HotelDTO hotelDTO, Model model) {
 		
@@ -82,6 +83,7 @@ public class HotelController {
 		return "redirect:/admin/hoteles";
 	}
 	
+	//Método para visualizar los hoteles de un destino en especifico
 	@GetMapping("/{id}")
 	public String verHoteles(@PathVariable("id") String id, Model model) {
 		Optional<Destino> destinos = destinoRepository.findById(id);
@@ -108,6 +110,7 @@ public class HotelController {
 		return "Hotel/hoteles";
 	}
 	
+	//Método para ver los detalles de un hotel en especifico
 	@GetMapping("/detalles/{id}")
 	public String verHotel(@PathVariable("id") String id, Model model) {
 		Hotel hoteles = hotelRepository.findById(id).orElse(null);
@@ -142,6 +145,7 @@ public class HotelController {
 		return "Hotel/detalles";
 	}
 	
+	//Método para editar un hotel
 	@PostMapping("/editar")
 	public String editar(@RequestParam("id") String id, @ModelAttribute HotelDTO hotelDTO, Model model) {
 		Hotel hotel = hotelRepository.findById(id).orElse(null);

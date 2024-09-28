@@ -29,6 +29,7 @@ public class ActividadesController {
 	@Autowired
 	private DestinoRepository destinoRepository;
 	
+	//Método para agregar actividades
 	@PostMapping("/agregar")
 	public String registrarActividad(@ModelAttribute("actividad") ActividadDTO actividadDTO, Model model) {
 		
@@ -61,6 +62,8 @@ public class ActividadesController {
 		return "redirect:/admin/destino";
 	}
 
+	
+	//Método para editar actividades
 	@PostMapping("/editar")
 	public String editar(@RequestParam("id") String id, @ModelAttribute ActividadDTO actividadDTO, Model model) {
 		Actividad actividad = actividadesRepository.findById(id).orElse(null);

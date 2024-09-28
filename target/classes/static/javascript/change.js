@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const restaurantesCards = document.querySelectorAll('.restaurantes-wrapper .card');
 	
 	const checkCardCount = (cards, leftArrow, rightArrow) => {
-		if (cards.length > 4) {
+		if (cards.length > 3) {
 			rightArrow.style.display = 'block';
 			leftArrow.style.display = 'block';
 		} else {

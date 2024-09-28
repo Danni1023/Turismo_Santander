@@ -12,106 +12,132 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-		<div class="navbar">
-			<div th:if="${session.UserLog != null}">
-				<div class="imag-logo">
-					<a th:href="@{/usuario/}"><img th:src="@{/img/logo.png}"></a>
+		<div class="wrapper">
+			<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+				<a th:if="${session.UserLog == null && session.AdminLog == null}" class="navbar-brand" th:href="@{/}">
+					<img th:src="@{/img/logo.png}" width="150" height="auto">
+				</a>
+				<a th:if="${session.UserLog != null}" class="navbar-brand" th:href="@{/usuario/}">
+					<img th:src="@{/img/logo.png}" width="150" height="auto">
+				</a>
+				<a th:if="${session.AdminLog != null}" class="navbar-brand" th:href="@{/admin/}">
+					<img th:src="@{/img/logo.png}" width="150" height="auto">
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<div class="navbar-center">
+						<div class="search-bar">
+							<form th:action="@{/search}" method="get">
+								<input type="text" name="query" placeholder="Buscar destinos, hoteles o restaurantes..." required>
+								<button type="submit" class="search-btn">
+									<i class="fas fa-search"></i>
+								</button>
+							</form>
+						</div>
+					</div>
+					<ul class="navbar-nav align-items-center ml-auto">
+						<li th:if="${session.UserLog == null && session.AdminLog == null}" class="nav-item">
+							<a class="nav-link nav_links" th:href='@{/}'>Inicio</a>
+						</li>
+						<li th:if="${session.UserLog != null}" class="nav-item">
+							<a class="nav-link nav_links" th:href='@{/usuario/}'>Inicio</a>
+						</li>
+						<li th:if="${session.AdminLog != null}" class="nav-item">
+							<a class="nav-link nav_links" th:href='@{/admin/}'>Inicio</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link nav_links" th:href='@{/destinos}'>Destinos</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link nav_links" th:href='@{/sobre-nosotros}'>Nosotros</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item dropdown" th:if="${session.AdminLog != null}">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fa-solid fa-gear"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" th:href="@{/admin/destino}"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i> Gestionar Destinos</a>
+								<a class="dropdown-item" th:href="@{/admin/hoteles}"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i> Gestionar Hoteles</a>
+								<a class="dropdown-item" th:href="@{/admin/restaurantes}"><i class="fa-solid fa-pen-to-square" style="margin-right: 5px;"></i> Gestionar Restaurantes</a>
+								<a class="dropdown-item" th:href="@{/admin/nuevasActividades}"><i class="fa-solid fa-plus" style="margin-right: 7px;"></i> Añadir Actividades</a>
+								<a class="dropdown-item" th:href="@{/admin/listaUsuarios}"><i class="fa-solid fa-address-book" style="margin-right: 5px;"></i> Info Usuarios</a>
+								<a class="dropdown-item" th:href="@{/admin/listaAdministradores}"><i class="fa-solid fa-address-book" style="margin-right: 5px;"></i> Info Admin</a>
+							</div>
+						</li>
+						<div class="nav-item">
+							<button th:if="${session.UserLog == null && session.AdminLog == null}" th:onclick="|window.location.href='@{/login}'|" class="login-btn"><strong>Iniciar sesión</strong></button>
+							<button th:if="${session.UserLog != null || session.AdminLog != null}" th:onclick="|window.location.href='@{/logout}'|" class="logout-btn"><strong><i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión</strong></button>
+						</div>
+					</ul>
 				</div>
-			</div>
-			<div th:if="${session.AdminLog != null}">
-				<div class="imag-logo">
-					<a th:href="@{/admin/}"><img th:src="@{/img/logo.png}"></a>
+			</nav>
+			<main>
+				<div class="form-container">
+					<h2><i class="fas fa-user-edit"></i> Editar Perfil</h2>
+					<form th:action="@{/usuario/actualizar}" th:object="${usuario}" method="post">
+						<input type="hidden" th:field="*{id}">
+						<div class="form-row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="tipoDocumento"><i class="fas fa-id-card"></i> Tipo de Documento:</label>
+									<select id="tipoDocumento" name="tipoDocumento" th:field="*{tipoDocumento}" class="form-control" required>
+										<option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
+										<option value="Cédula de Extranjería">Cédula de Extranjería</option>
+										<option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+										<option value="Pasaporte">Pasaporte</option>
+										<option value="Registro Civil">Registro Civil</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="documento"><i class="fas fa-passport"></i> Número de Documento:</label>
+									<input type="text" id="documento" name="documento" placeholder="Documento de Identidad" th:field="*{documento}" class="form-control" required>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="nombre"><i class="fas fa-user"></i> Nombre:</label>
+									<input type="text" id="nombre" name="nombre" placeholder="Nombre" th:field="*{nombre}" class="form-control" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="apellido"><i class="fas fa-user"></i> Apellido:</label>
+									<input type="text" id="apellido" name="apellido" placeholder="Apellido" th:field="*{apellido}" class="form-control" required>
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="correo"><i class="fas fa-envelope"></i> Correo:</label>
+									<input type="email" id="correo" name="correo" placeholder="Correo" th:field="*{correo}" class="form-control" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="user"><i class="fas fa-user-circle"></i> Nombre de Usuario:</label>
+									<input type="text" id="user" name="user" placeholder="Usuario" th:field="*{user}" class="form-control" required>
+								</div>
+							</div>
+						</div>
+						<div th:if="${error}" class="error-message">
+							<p th:text="${error}"></p>
+						</div>
+						<div class="btn-save">
+							<button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk" style="margin-right: 5px;"></i> Actualizar</button>
+						</div>
+					</form>
 				</div>
-			</div>
-			<div th:if="${session.UserLog == null && session.AdminLog == null}">
-				<div class="imag-logo">
-					<a th:href="@{/}"><img th:src="@{/img/logo.png}"></a>
-				</div>
-			</div>
-	        <div class="navbar-center">
-	            <div class="search-bar">
-	                <form th:action="@{/search}" method="get">
-	                    <input type="text" name="query" placeholder="Buscar destinos, hoteles o restaurantes..." required>
-	                    <button type="submit" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); border: none; background: none; cursor: pointer;">
-	                        <i class="fas fa-search" style="font-size: 18px; color: #00bfff;"></i>
-	                    </button>
-	                </form>
-	            </div>
-	        </div>
-	        <div class="navbar-buttons">
-	            <a th:href='@{/destinos}' class="navbar-button">Destinos</a>
-	            <div th:if="${session.UserLog != null || session.AdminLog != null}">
-					<button class="navbar-button nav-button" type="button" th:onclick="|window.location.href='@{/logout}'|">
-	        			<strong><i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Cerrar Sesión</strong>
-	    			</button>
-	            </div>
-	            <div th:if="${session.UserLog == null && session.AdminLog == null}">
-					<a th:href='@{/login}' class="navbar-button nav-button">Iniciar Sesión</a>
-	            </div>
-	        </div>
-	    </div>
-		<main>
-			<div class="form-container">
-				<h2><i class="fas fa-user-edit"></i> Editar Perfil</h2>
-				<form th:action="@{/usuario/actualizar}" th:object="${usuario}" method="post">
-					<input type="hidden" th:field="*{id}">
-					<div class="form-row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="tipoDocumento"><i class="fas fa-id-card"></i> Tipo de Documento:</label>
-								<select id="tipoDocumento" name="tipoDocumento" th:field="*{tipoDocumento}" class="form-control" required>
-									<option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
-									<option value="Cédula de Extranjería">Cédula de Extranjería</option>
-									<option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
-									<option value="Pasaporte">Pasaporte</option>
-									<option value="Registro Civil">Registro Civil</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="documento"><i class="fas fa-passport"></i> Número de Documento:</label>
-								<input type="text" id="documento" name="documento" placeholder="Documento de Identidad" th:field="*{documento}" class="form-control" required>
-							</div>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="nombre"><i class="fas fa-user"></i> Nombre:</label>
-								<input type="text" id="nombre" name="nombre" placeholder="Nombre" th:field="*{nombre}" class="form-control" required>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="apellido"><i class="fas fa-user"></i> Apellido:</label>
-								<input type="text" id="apellido" name="apellido" placeholder="Apellido" th:field="*{apellido}" class="form-control" required>
-							</div>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="correo"><i class="fas fa-envelope"></i> Correo:</label>
-								<input type="email" id="correo" name="correo" placeholder="Correo" th:field="*{correo}" class="form-control" required>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="user"><i class="fas fa-user-circle"></i> Nombre de Usuario:</label>
-								<input type="text" id="user" name="user" placeholder="Usuario" th:field="*{user}" class="form-control" required>
-							</div>
-						</div>
-					</div>
-					<div th:if="${error}" class="error-message">
-						<p th:text="${error}"></p>
-					</div>
-					<div class="btn-save">
-						<button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk" style="margin-right: 5px;"></i> Actualizar</button>
-					</div>
-				</form>
-			</div>
-		</main>
+			</main>
+		</div>
 		<footer class="bg-dark text-light py-4 mt-5">
 			<div class="container">
 				<div class="row">

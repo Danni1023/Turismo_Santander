@@ -34,6 +34,7 @@ public class IndexController {
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 	
+	//Método para traer los destinos favoritos del usuario
 	@GetMapping
 	public String destinosFavoritos(Model model, HttpServletRequest request) {
 		List<Destino> destinos = destinoRepository.findAll();
@@ -61,6 +62,7 @@ public class IndexController {
 		return "index";
 	}
 	
+	//Método para traer todos los destinos
 	@GetMapping("/destinos")
 	public String destinos(Model model, HttpServletRequest request) {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("UserLog");
@@ -86,6 +88,7 @@ public class IndexController {
 		return "Destino/destinos";
 	}
 	
+	//Método para realizar búsquedas
 	@GetMapping("/search")
 	public String search(@RequestParam("query") String query, Model model) {
 		List<Destino> destinos = destinoRepository.searchDestinos(query);
@@ -135,5 +138,11 @@ public class IndexController {
 		model.addAttribute("query", query);
 		
 		return "results";
+	}
+	
+	//Método para navegar a la pestaña sobre nosotros
+	@GetMapping("/sobre-nosotros")
+	public String sobreNosotros() {
+		return "nosotros";
 	}
 }

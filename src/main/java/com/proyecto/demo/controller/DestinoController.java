@@ -41,6 +41,7 @@ public class DestinoController {
 	@Autowired
 	private ComentariosRepository comentariosRepository;
 	
+	//Método para agregar destino
 	@PostMapping("/agregar")
 	public String agregarDestino(@ModelAttribute("destino") DestinoDTO destinoDTO, Model model) {
 		
@@ -72,6 +73,7 @@ public class DestinoController {
 		return "redirect:/admin/destino";
 	}
 	
+	//Método para ver los detalles de un destino
 	@GetMapping("/{id}")
 	public String verDestino(@PathVariable("id") String id, Model model, HttpServletRequest request) {
 		Destino destino = destinoRepository.findById(id).orElse(null);
@@ -125,6 +127,7 @@ public class DestinoController {
 		return "Destino/detalles";
 	}
 	
+	//Método para agregar un destino como favorito
 	@PostMapping("/{id}/favorito")
 	public String favorito(@PathVariable("id") String id, HttpServletRequest request) {
 		Destino destino = destinoRepository.findById(id).orElse(null);
@@ -156,6 +159,7 @@ public class DestinoController {
 		}
 	}
 	
+	//Método para editar un destino
 	@PostMapping("/editar")
 	public String editar(@RequestParam("id") String id, @ModelAttribute DestinoDTO destinoDTO, Model model) {
 		Destino destino = destinoRepository.findById(id).orElse(null);

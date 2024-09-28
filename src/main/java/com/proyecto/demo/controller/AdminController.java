@@ -58,6 +58,7 @@ public class AdminController {
 	@Autowired
 	private ComentariosRepository comentariosRepository;
 	
+	//Método para navegar al index del admin
 	@GetMapping("/")
 	public String index(HttpServletRequest request, Model model) {
 		Admin admin = (Admin) request.getSession().getAttribute("AdminLog");
@@ -88,6 +89,7 @@ public class AdminController {
 	    return "Admin/index";
 	}
 	
+	//Método navegar al formulario editar el perfil
 	@GetMapping("/editarPerfil")
 	public String editarPerfil(HttpServletRequest request, Model model) {
 		Admin admin = (Admin) request.getSession().getAttribute("AdminLog");
@@ -100,6 +102,7 @@ public class AdminController {
 		return "Admin/editarPerfil";
 	}
 	
+	//Método para editar perfil del Admin
 	@PostMapping("/actualizar")
 	public String actualizarPerfil(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
 		Admin admin = (Admin) request.getSession().getAttribute("AdminLog");

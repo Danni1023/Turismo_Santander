@@ -17,13 +17,15 @@ public class RegistroController {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
+	
+	//Método para navegar a la pestaña de registro
 	@GetMapping("/nuevoUsuario")
     public String nuevoUsuario(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "agregar";
 	}
 	
+	//Método para crear nuevos usuarios
 	@PostMapping("/agregarUsuario")
 	public String agregarUsuario(@ModelAttribute("usuario") Usuario usuario, Model model) {
 		if (usuarioRepository.findByDocumento(usuario.getDocumento()) != null) {

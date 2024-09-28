@@ -40,6 +40,7 @@ public class RestauranteController {
 	@Autowired
 	private ComentariosRepository comentariosRepository;
 	
+	//Método para agregar restaurantes
 	@PostMapping("/agregar")
 	public String registrarRestaurante(@ModelAttribute("restaurante") RestauranteDTO restauranteDTO, Model model) {
 		
@@ -82,6 +83,7 @@ public class RestauranteController {
 		return "redirect:/admin/restaurantes";
 	}
 	
+	//Método para ver los resstaurantes de un destino en especifico
 	@GetMapping("/{id}")
 	public String verRestaurantes(@PathVariable("id") String id, Model model) {
 		Optional<Destino> destinos = destinoRepository.findById(id);
@@ -108,6 +110,7 @@ public class RestauranteController {
 		return "Restaurante/restaurantes";
 	}
 	
+	//Método para ver los detalles de un restaurante
 	@GetMapping("/detalles/{id}")
 	public String verRestaurante(@PathVariable("id") String id, Model model) {
 		Restaurante restaurantes = restauranteRepository.findById(id).orElse(null);
@@ -142,6 +145,8 @@ public class RestauranteController {
 		return "Restaurante/detalles";
 	}
 	
+	
+	//Método para editar el restaurante
 	@PostMapping("/editar")
 	public String editar(@RequestParam("id") String id, @ModelAttribute RestauranteDTO restauranteDTO, Model model) {
 		Restaurante restaurante = restauranteRepository.findById(id).orElse(null);

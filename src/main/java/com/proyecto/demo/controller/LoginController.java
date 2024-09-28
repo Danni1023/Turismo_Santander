@@ -25,12 +25,14 @@ public class LoginController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	//Método para ir a la pestaña de login
 	@GetMapping("/login")
 	public String indexLogin(Model model) {
 		model.addAttribute("mensaje", false);
 		return "login";
 	}
 	
+	//Método para realizar autenticación de usuario
 	@PostMapping("/login")
 	public  String login(@RequestParam("user") String user, @RequestParam("password") String password, HttpServletRequest request, Model model) {
 		
@@ -61,6 +63,7 @@ public class LoginController {
 		}
 	}
 	
+	//Método para cerrar sesión
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
