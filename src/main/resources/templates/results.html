@@ -87,7 +87,7 @@
 					<button class="arrow left-arrow" id="leftArrow">&#10094;</button>
 					<div class="cards-wrapper destinos-wrapper" th:if="${!destinos.isEmpty()}">
 						<div th:each="destino : ${destinos}" class="card">
-		            		<img th:if="${destino.imagenBase64 != null && !destino.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${destino.imagenBase64[0]}" class="card-img-top" alt="Imagen del destino">
+		            		<img th:if="${destino.imagenBase64 != null && !destino.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${destino.imagenBase64[0]}" class="card-img-top" alt="Imagen del destino" loading="lazy">
 							<div class="card-body">
 								<h5 class="card-title" th:text="${destino.nombre}"></h5>
 								<p th:text="${destino.miniDescripcion}"></p>
@@ -106,7 +106,7 @@
 					<button class="arrow left-arrow" id="leftArrow1">&#10094;</button>
 					<div class="cards-wrapper hoteles-wrapper" th:if="${!hoteles.isEmpty()}">
 						<div th:each="hotel : ${hoteles}" class="card">
-							<img th:if="${hotel.imagenBase64 != null && !hotel.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${hotel.imagenBase64[0]}"  class="card-img-top" alt="Imagen del Hotel">
+							<img th:if="${hotel.imagenBase64 != null && !hotel.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${hotel.imagenBase64[0]}"  class="card-img-top" alt="Imagen del Hotel" loading="lazy">
 							<div class="card-body">
 								<h5 class="card-title" th:text="${hotel.nombre}"></h5>
 								<p th:text="${hotel.miniDescripcion}"></p>
@@ -125,7 +125,7 @@
 					<button class="arrow left-arrow" id="leftArrow2">&#10094;</button>
 					<div class="cards-wrapper restaurantes-wrapper" th:if="${!restaurantes.isEmpty()}">
 						<div th:each="restaurante : ${restaurantes}" class="card">
-							<img th:if="${restaurante.imagenBase64 != null && !restaurante.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${restaurante.imagenBase64[0]}"  class="card-img-top" alt="Imagen del Hotel">
+							<img th:if="${restaurante.imagenBase64 != null && !restaurante.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${restaurante.imagenBase64[0]}"  class="card-img-top" alt="Imagen del Hotel" loading="lazy">
 							<div class="card-body">
 								<h5 class="card-title" th:text="${restaurante.nombre}"></h5>
 								<p th:text="${restaurante.miniDescripcion}" class="card-text"></p>

@@ -80,7 +80,7 @@
 				<div class="row">
 					<div th:each="destino : ${destinos}" class="col-md-4 mb-4">
 						<div class="card">
-							<img th:if="${destino.imagenBase64 != null && !destino.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${destino.imagenBase64[0]}"  class="card-img-top" alt="Imagen del destino">
+							<img th:if="${destino.imagenBase64 != null && !destino.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${destino.imagenBase64[0]}"  class="card-img-top" alt="Imagen del destino" loading="lazy">
 							<div th:if="${session.UserLog != null || session.AdminLog != null}">
 								<form th:action="@{/destino/{id}/favorito(id=${destino.id})}" method="post" class="favorite-form">
 									<button type="submit" class="btn btn-light">

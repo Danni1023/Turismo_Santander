@@ -83,11 +83,11 @@
 					</div>
 					<div class="imagenes-container" id="imagenesModal" th:data-images="${#strings.arrayJoin(restaurantes.imagenBase64, ',')}">
 						<div class="imagen-principal">
-							<img th:src="'data:image/jpeg;base64,' + ${restaurantes.imagenBase64[0]}" onclick="openModal(0)">
+							<img th:src="'data:image/jpeg;base64,' + ${restaurantes.imagenBase64[0]}" onclick="openModal(0)" loading="lazy">
 						</div>
 						<div class="imagenes-secundarias">
 							<div th:each="imagenBase64, iterStat : ${restaurantes.imagenBase64}" th:if="${iterStat.index > 0}" class="thumbnail">
-								<img th:src="'data:image/jpeg;base64,' + ${imagenBase64}" th:attr="onclick=${'openModal(' + iterStat.index + ')'}">
+								<img th:src="'data:image/jpeg;base64,' + ${imagenBase64}" th:attr="onclick=${'openModal(' + iterStat.index + ')'}" loading="lazy">
 							</div>
 						</div>
 					</div>

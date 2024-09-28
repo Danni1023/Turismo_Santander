@@ -98,13 +98,13 @@
 							<i class="fa-solid fa-utensils" style="margin-right: 15px;"></i> Restaurantes
 						</button>
 					</div>
-					<div class="imagenes-container" id="imagenesModal" th:data-images="${#strings.arrayJoin(destinos.imagenBase64, ',')}">
+					<div class="imagenes-container" id="imagenesModal" th:data-images="${#strings.arrayJoin(destinos.imagenBase64, ',')}" loading="lazy">
 						<div class="imagen-principal">
 							<img th:src="'data:image/jpeg;base64,' + ${destinos.imagenBase64[0]}" onclick="openModal(0)">
 						</div>
 						<div class="imagenes-secundarias">
 							<div th:each="imagenBase64, iterStat : ${destinos.imagenBase64}" th:if="${iterStat.index > 0}" class="thumbnail">
-								<img th:src="'data:image/jpeg;base64,' + ${imagenBase64}" th:attr="onclick=${'openModal(' + iterStat.index + ')'}">
+								<img th:src="'data:image/jpeg;base64,' + ${imagenBase64}" th:attr="onclick=${'openModal(' + iterStat.index + ')'}" loading="lazy">
 							</div>
 						</div>
 					</div>

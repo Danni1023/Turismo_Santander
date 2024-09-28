@@ -142,7 +142,7 @@
 				<button class="arrow left-arrow" id="leftArrow">&#10094;</button>
 				<div class="cards-wrapper destinos-wrapper" th:if="${!destinos.isEmpty()}">
 					<div th:each="destino : ${destinos}" class="card">
-						<img th:if="${destino.imagenBase64 != null && !destino.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${destino.imagenBase64[0]}" class="card-img-top">
+						<img th:if="${destino.imagenBase64 != null && !destino.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${destino.imagenBase64[0]}" class="card-img-top" loading="lazy">
 						<div th:if="${session.UserLog != null || session.AdminLog != null}">
 							<form th:action="@{/destino/{id}/favorito(id=${destino.id})}" method="post" class="favorite-form">
 								<button type="submit" class="btn-light">

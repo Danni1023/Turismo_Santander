@@ -80,7 +80,7 @@
 				<div class="row">
 					<div th:each="hotel : ${hoteles}" class="col-md-4 mb-4">
 						<div class="card">
-							<img th:if="${hotel.imagenBase64 != null && !hotel.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${hotel.imagenBase64[0]}"  class="card-img-top" alt="Imagen del Hotel">
+							<img th:if="${hotel.imagenBase64 != null && !hotel.imagenBase64.isEmpty()}" th:src="'data:image/jpeg;base64,' + ${hotel.imagenBase64[0]}"  class="card-img-top" alt="Imagen del Hotel" loading="lazy">
 							<div class="card-body">
 								<h5 th:text="${hotel.nombre}" class="card-title"></h5>
 								<p th:text="${hotel.miniDescripcion}" class="card-text"></p>
